@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
 
 #define WIDTH 1920
 #define HEIGHT 1080
@@ -14,11 +15,24 @@ const unsigned int LINE_COLORS[] = {0x9AC2B3, 0xC7B8EA, 0xB0BEC5, 0xFBC02D,
                                     0xEF9A9A, 0x81C784, 0xA5D6A7, 0xDCE775,
                                     0x90A4AE, 0xCCEEFF};
 
+int is_all_digits(const char *str) {
+    while (*str) {
+        if (!isdigit(*str)) return 0;
+        str++;
+    }
+    return 1;
+}
+
 int main(int argc, char *argv[]) {
     srand(time(NULL));
 
     if (argc != 2) {
         printf("Usage: %s <walker_number>\n", argv[0]);
+        return -1;
+    }
+
+    if (!is_all_digits(argv[1])) {
+        printf("Argument isn't a valid number.\nProgram Terminated\n");
         return -1;
     }
 
